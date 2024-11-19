@@ -18,7 +18,7 @@
 
     <div class="col-lg-6 col-5 mt-lg-5 mt-3 mx-auto shadow text-center p-lg-3 p-2">
         <h2 class="text-light text-decoration-underline">Student Portal</h2>
-        
+
         <div class="form-group my-3">
             <label for="student" class="fw-bold fs-5">Student Name:</label> &ensp;
             <input class="form-control mx-auto w-100 shadow-none" id="student" type="text"
@@ -132,7 +132,8 @@
             }
 
         }
-
+        var gottenStudents = localStorage.getItem('student')
+        var parsedStudents = JSON.parse(gottenStudents)
 
         function displayAllStudents() {
             displayStudents.innerHTML = ''
@@ -147,16 +148,12 @@
             </table>`
             for (i = 0; i < allStudents.length; i++) {
                 console.log(i);
-                for (p = 20230021; p < allStudents.length; p++) {
-                    console.log(p);
-
-                }
 
                 table.innerHTML += `
                 <tr>
                     <td>${i + 1}</td>
                     <td>${allStudents[i]}</td>
-                    <td>${[p + 1]}</td>
+                    <td>${i + 20234501}</td>
                     <td>
                         <button onclick="editIndex()" class="btn btn-warning mx-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><img src="./Images/edit-button-svgrepo-com.svg" 
                             width="30px" alt=""></button>
