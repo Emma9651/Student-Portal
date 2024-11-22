@@ -29,7 +29,8 @@
         <div id="errorMsg">
             <p class="alert alert-dark p-1 w-105 mx-auto" style="display: block;">No Student Added!</p>
         </div>
-        <p id="deletedBook" class="alert alert-dark p-1 w-100 mx-auto" style="display: none;">Student Added Deleted!</p>
+        <p id="dStudent" class="alert alert-dark p-1 w-100 mx-auto" style="display: none;">Student Added Deleted!
+        </p>
         <div id="displayStudents"></div>
     </div>
 
@@ -104,12 +105,15 @@
                 toast('Deleted !!', 'green', '1500')
                 if (allStudents < 1) {
                     table.innerHTML = ''
-                    deletedBook.style.display = 'block'
+                    dStudent.style.display = 'block'
 
                 } else {
+                    dStudent.style.display = ''
+                    dStudent.style.display = 'none'
                     displayAllStudents()
                 }
             } else {
+                
                 displayAllStudents()
             }
         }
