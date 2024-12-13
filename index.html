@@ -77,71 +77,67 @@
             }).showToast();
 
         }
-        var allStudents = []
+        let allStudents = JSON.parse(localStorage.getItem('allStudents')) || [];
+        // var allStudents = []
         var newIndex = 0
 
         function submit() {
-            if (student.value == "") {
+            const studentName = document.getElementById('student').value.trim();
+            if (studentName === "") {
                 toast('Kindly Input Your Details', 'red')
-            } else {
-                allStudents.push(student.value)
-                toast('Name Submitted', 'blue', '2500')
-                console.log(allStudents);
-                document.getElementById('student').value = ""
-                errorMsg.innerHTML = ''
-                displayStudents.innerHTML = allStudents
-                displayStudents.innerHTML = ''
-                displayAllStudents()
+                return
             }
+            allStudents.push(studentName)
+            localStorage.setItem('allStudents', JSON.stringify(allStudents))
+            toast('Name Submitted', 'blue', '2500')
+            console.log(allStudents);
+            document.getElementById('student').value = ""
+            errorMsg.innerHTML = ''
+            displayStudents.innerHTML = allStudents
+            displayStudents.innerHTML = ''
+            displayAllStudents()
+
         }
 
         function deleteIndex(index) {
             console.log(index);
-
             var confirmDelete = confirm('Do You Really Wants To Delete?')
             console.log(confirmDelete);
             if (confirmDelete) {
-                allStudents.splice(index, 1)
-                toast('Deleted !!', 'green', '1500')
-                if (allStudents < 1) {
-                    table.innerHTML = ''
+                allStudents.splice(index, 1);
+                localStorage.setItem('allStudents', JSON.stringify(allStudents));
+                toast('Deleted!', 'green', 1500);
+                if (allStudents.length === 0) {
+                    document.getElementById('table').innerHTML = ''
                     dStudent.style.display = 'block'
+                }else {
+                dStudent.style.display = 'none'
+                displayAllStudents()
+            }
+            }
+        }
+            function editIndex(index) {
+                var newIndex = index
+            }
 
+            function editStudent() {
+                if (updatedTerm.value == "") {
+                    toast('Nothing To Edit', 'red', '2500')
                 } else {
-                    dStudent.style.display = ''
-                    dStudent.style.display = 'none'
+                    allStudents.splice(newIndex, 1, updatedTerm.value)
+                    localStorage.setItem('allStudents', JSON.stringify(allStudents))
+                    toast('Successfully Updated', 'blue', 'dark')
+                    console.log(allStudents);
+                    document.getElementById('updatedTerm').value = ''
                     displayAllStudents()
+
                 }
-            } else {
-                
-                displayAllStudents()
-            }
-        }
-
-
-        function editIndex(index) {
-            var newIndex = index
-        }
-
-        function editStudent() {
-            if (updatedTerm.value == "") {
-                toast('Nothing To Edit', 'red', '2500')
-            } else {
-                allStudents.splice(newIndex, 1, updatedTerm.value)
-                toast('Successfully Updated', 'blue', 'dark')
-                console.log(allStudents);
-                document.getElementById('updatedTerm').value = ''
-                displayAllStudents()
 
             }
 
-        }
-        var gottenStudents = localStorage.getItem('student')
-        var parsedStudents = JSON.parse(gottenStudents)
-
-        function displayAllStudents() {
-            displayStudents.innerHTML = ''
-            displayStudents.innerHTML = `
+            function displayAllStudents() {
+                displayStudents.innerHTML = ''
+                displayStudents.innerHTML = `
              <table class="table table-bordered table-hover table-primary table-striped-columns" id="table">
                <tr>
                 <th>S/N</th>
@@ -150,10 +146,10 @@
                 <th>More Option</th>
                 </tr> 
             </table>`
-            for (i = 0; i < allStudents.length; i++) {
-                console.log(i);
+                for (i = 0; i < allStudents.length; i++) {
+                    console.log(i);
 
-                table.innerHTML += `
+                    table.innerHTML += `
                 <tr>
                     <td>${i + 1}</td>
                     <td>${allStudents[i]}</td>
@@ -166,8 +162,10 @@
                     </tr>
                 `
 
+                }
             }
-        }
+            // Initial display on page load
+            displayAllStudents()
     </script>
 </body>
 
